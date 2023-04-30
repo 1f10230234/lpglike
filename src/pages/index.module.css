@@ -28,8 +28,8 @@
 }
 
 .stone {
-  height: 70px;
-  width: 70px;
+  height: 87.5%;
+  width: 87.5%;
   background-color: #fff;
   border-radius: 50%;
 }
