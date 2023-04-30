@@ -6,6 +6,32 @@
   height: 100vh;
   min-height: 100vh;
   padding: 0 0.5rem;
+  background-color: rgb(255 255 255);
+}
+
+.board {
+  display: flex;
+  flex-wrap: wrap;
+  height: 642px;
+  width: 642px;
+  background-color: rgb(0 255 50);
+  border: 1px solid #000;
+}
+
+.masu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 12.5%;
+  width: 12.5%;
+  border: 1px solid #000;
+}
+
+.stone {
+  height: 70px;
+  width: 70px;
+  background-color: #fff;
+  border-radius: 50%;
 }
 
 .main {

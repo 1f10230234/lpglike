@@ -1,57 +1,178 @@
+import { useState } from 'react';
 import styles from './index.module.css';
 
 const Home = () => {
+  //prettier-ignore
+  const [board,setBoard] = useState([
+[0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0],
+[0,0,0,3,0,0,0,0],
+[0,0,3,2,1,0,0,0],
+[0,0,0,1,2,3,0,0],
+[0,0,0,0,3,0,0,0],
+[0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0]
+  ]);
+  const direction = [
+    [0, 1],
+    [1, 1],
+    [1, 0],
+    [1, -1],
+    [0, -1],
+    [-1, -1],
+    [-1, 0],
+    [-1, 1],
+  ];
+  const [turnColor, setTurnColor] = useState(1);
+  const newBoard: number[][] = JSON.parse(JSON.stringify(board));
+  let countBrack = 0;
+  let countWhite = 0;
+  console.log('a');
+  const clickMasu = (x: number, y: number) => {
+    let isPlace = false;
+    let isPredict = false;
+    if (board.some((row) => row.includes(3))) {
+      if (board[y][x] === 3) {
+        ////console.log(x, y);
+        for (const n of direction) {
+          ////console.log(n);
+          for (
+            let distance = 1;
+            distance <=
+            Math.min(
+              Math.abs(3.5 + 3.5 * n[0] - x) + 99 * (1 - Math.abs(n[0])),
+              Math.abs(3.5 + 3.5 * n[1] - y) + 99 * (1 - Math.abs(n[1]))
+            );
+            distance++
+          ) {
+            //console.log('!');
+            if (board[y + n[1] * distance][x + n[0] * distance] % 3 === 0) {
+              //console.log('a');
+              distance = 0;
+              break;
+            } else if (board[y + n[1] * distance][x + n[0] * distance] === 3 - turnColor) {
+              //console.log('b');
+              continue;
+            } else if (board[y + n[1] * distance][x + n[0] * distance] === turnColor) {
+              //console.log('c');
+              ////console.log('d', distance);
+              for (let i = 1; i < distance; i++) {
+                newBoard[y + n[1] * (distance - i)][x + n[0] * (distance - i)] = turnColor;
+                isPlace = true;
+              }
+              ////console.log(isPlace);
+              break;
+            }
+          }
+        }
+        if (isPlace) {
+          //console.log('e');
+          newBoard[y][x] = turnColor;
+          for (let x1 = 0; x1 < 8; x1++) {
+            for (let y1 = 0; y1 < 8; y1++) {
+              //console.log(newBoard[y1][x1]);
+              newBoard[y1][x1] %= 3;
+            }
+          }
+          //console.table(newBoard);
+          //console.log('next');
+          for (let x2 = 0; x2 < 8; x2++) {
+            for (let y2 = 0; y2 < 8; y2++) {
+              //console.log(x2, y2); //
+              for (const n of direction) {
+                //console.log(n);
+                for (
+                  let distance = 1;
+                  distance <=
+                  Math.min(
+                    Math.abs(3.5 + 3.5 * n[0] - x2) + 99 * (1 - Math.abs(n[0])),
+                    Math.abs(3.5 + 3.5 * n[1] - y2) + 99 * (1 - Math.abs(n[1]))
+                  );
+                  distance++
+                ) {
+                  if (newBoard[y2][x2] === 3 - turnColor) {
+                    if (newBoard[y2 + n[1] * distance][x2 + n[0] * distance] === turnColor) {
+                      //console.log('b');
+                      continue;
+                    } else if (newBoard[y2 + n[1] * distance][x2 + n[0] * distance] % 3 === 0) {
+                      //console.log('c', distance);
+                      for (let i = 1; i < distance; i++) {
+                        //console.log('d', [x2 + n[0] * distance], [y2 + n[1] * distance]);
+                        newBoard[y2 + n[1] * distance][x2 + n[0] * distance] = 3;
+                      }
+                      isPredict = true;
+                      //console.log(isPlace);
+                      break;
+                    } else {
+                      break;
+                    }
+                  }
+                }
+              }
+              ////console.table(newBoard);
+              setBoard(newBoard);
+            }
+          }
+        }
+      }
+    }
+    console.log(isPlace);
+    console.log(isPredict);
+    if (isPlace) {
+      setTurnColor(3 - turnColor);
+    } else {
+      if (board.some((row) => row.includes(3)) === false) {
+        setTurnColor(3 - turnColor);
+      }
+    }
+    for (let i = 1; i < 8; i++) {
+      for (let j = 1; j < 8; j++) {
+        if (board[i][j] === 1) {
+          countWhite += 1;
+        }
+      }
+    }
+    for (let i = 1; i < 8; i++) {
+      for (let j = 1; j < 8; j++) {
+        if (board[i][j] === 2) {
+          countBrack += 1;
+          console.log(countBrack);
+        }
+      }
+    }
+  };
   return (
     <div className={styles.container}>
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code} style={{ backgroundColor: '#fafafa' }}>
-            pages/index.js
-          </code>
-        </p>
-
-        <div className={styles.grid}>
-          <a className={styles.card} href="https://nextjs.org/docs">
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a className={styles.card} href="https://nextjs.org/learn">
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a className={styles.card} href="https://github.com/vercel/next.js/tree/master/examples">
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            className={styles.card}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>Instantly deploy your Next.js site to a public URL with Vercel.</p>
-          </a>
+      <div className={styles.board}>
+        {board.map((row, y) =>
+          row.map((masu, x) => (
+            <div className={styles.masu} key={`${x}-${y}`} onClick={() => clickMasu(x, y)}>
+              {masu !== 0 && (
+                <div
+                  className={styles.stone}
+                  style={{
+                    background: masu === 1 ? '#000' : masu === 2 ? '#fff' : '#ff6a00',
+                    width: masu === 3 ? '20%' : '87.5%',
+                    height: masu === 3 ? '20%' : '87.5%',
+                  }}
+                />
+              )}
+            </div>
+          ))
+        )}
+        <div className={styles.turn}>
+          <h1>{`${turnColor === 1 ? '黒の番' : '白の番'}` + `：`}</h1>
         </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <img src="vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
+        <div className={styles.pass}>
+          <h1>{`${board.some((row) => row.includes(3)) ? '置けます' : 'パス'}` + `　`}</h1>
+        </div>
+        <div className={styles.count}>
+          <h1>{`白：` + `${countWhite}` + `個`}</h1>
+        </div>
+        <div className={styles.count}>
+          <h1>{`黒：` + `${countBrack}` + `個`}</h1>
+        </div>
+      </div>
     </div>
   );
 };
