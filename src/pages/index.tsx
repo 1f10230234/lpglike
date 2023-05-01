@@ -164,7 +164,7 @@ const Home = () => {
       </div>
       <div className={styles.turn}>
         <h1>
-          {`${turnColor === 1 ? '黒の番' : '白の番'}` +
+          {`${turnColor === 1 ? '黒の' : '白の'}` +
             `：` +
             `${board.some((row) => row.includes(3)) ? '置けます' : 'パス'}` +
             `  `}
