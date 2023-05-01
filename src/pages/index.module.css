@@ -27,7 +27,7 @@
   border: 1px solid #000;
 }
 
-.stone {
+.ishi {
   display: fl;
   height: 87.5%;
   width: 87.5%;
@@ -35,7 +35,7 @@
   border-radius: 50%;
 }
 
-.stone.change {
+.ishi.change {
   display: block;
   animation: change;
 }
