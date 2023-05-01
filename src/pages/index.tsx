@@ -25,11 +25,11 @@ const Home = () => {
   ];
   const [turnColor, setTurnColor] = useState(1);
   const newBoard: number[][] = JSON.parse(JSON.stringify(board));
-  let countBrack = 0;
-  let countWhite = 0;
+  const count = [];
   console.log('a');
   let isPlace = false;
-  let isPredict = false;
+  let isPredict = true;
+  const turn = 1;
   const clickMasu = (x: number, y: number) => {
     if (board.some((row) => row.includes(3))) {
       if (board[y][x] === 3) {
@@ -117,28 +117,24 @@ const Home = () => {
         }
       }
     }
+  };
+  for (let k = 0; k < 2; k++) {
+    for (let i = 1; i < 8; i++) {
+      for (let j = 1; j < 8; j++) {
+        if (board[i][j] === 1 + k) {
+          count[k] = 1;
+        }
+      }
+    }
     console.log(isPlace);
     console.log(isPredict);
     if (isPlace) {
       setTurnColor(3 - turnColor);
     } else {
-      if (board.some((row) => row.includes(3)) === false) {
+      if (board.some((row) => row.includes(3)) === false && turn > 9) {
         setTurnColor(3 - turnColor);
-      }
-    }
-  };
-  for (let i = 1; i < 8; i++) {
-    for (let j = 1; j < 8; j++) {
-      if (board[i][j] === 1) {
-        countWhite += 1;
-      }
-    }
-  }
-  for (let i = 0; i < 8; i++) {
-    for (let j = 0; j < 8; j++) {
-      if (board[i][j] === 2) {
-        countBrack += 1;
-        console.log(countBrack);
+      } else if (count[0] === count[1]) {
+        alert(`${count[0] > count[1] ? '黒' : '白'}の勝ち`);
       }
     }
   }
@@ -168,7 +164,7 @@ const Home = () => {
           `${board.some((row) => row.includes(3)) ? '置けます' : 'パス'}` +
           `  `}
       </h1>
-      <h1>{`白：` + `${countWhite}` + `個` + ` / ` + `黒：` + `${countBrack}` + `個`}</h1>
+      <h1>{`白：` + `${count[0]}` + `個` + ` / ` + `黒：` + `${count[1]}` + `個`}</h1>
     </div>
   );
 };
