@@ -28,10 +28,26 @@
 }
 
 .stone {
+  display: fl;
   height: 87.5%;
   width: 87.5%;
   background-color: #fff;
   border-radius: 50%;
+}
+
+.stone.change {
+  display: block;
+  animation: change;
+}
+
+@keyframes change {
+  0% {
+    width: 0;
+  }
+
+  100% {
+    width: 1;
+  }
 }
 
 .main {

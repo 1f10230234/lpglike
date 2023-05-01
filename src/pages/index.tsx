@@ -125,22 +125,22 @@ const Home = () => {
         setTurnColor(3 - turnColor);
       }
     }
-    for (let i = 1; i < 8; i++) {
-      for (let j = 1; j < 8; j++) {
-        if (board[i][j] === 1) {
-          countWhite += 1;
-        }
-      }
-    }
-    for (let i = 1; i < 8; i++) {
-      for (let j = 1; j < 8; j++) {
-        if (board[i][j] === 2) {
-          countBrack += 1;
-          console.log(countBrack);
-        }
-      }
-    }
   };
+  for (let i = 1; i < 8; i++) {
+    for (let j = 1; j < 8; j++) {
+      if (board[i][j] === 1) {
+        countWhite += 1;
+      }
+    }
+  }
+  for (let i = 0; i < 8; i++) {
+    for (let j = 0; j < 8; j++) {
+      if (board[i][j] === 2) {
+        countBrack += 1;
+        console.log(countBrack);
+      }
+    }
+  }
   return (
     <div className={styles.container}>
       <div className={styles.board}>
@@ -160,18 +160,17 @@ const Home = () => {
             </div>
           ))
         )}
-        <div className={styles.turn}>
-          <h1>{`${turnColor === 1 ? '黒の番' : '白の番'}` + `：`}</h1>
-        </div>
-        <div className={styles.pass}>
-          <h1>{`${board.some((row) => row.includes(3)) ? '置けます' : 'パス'}` + `　`}</h1>
-        </div>
-        <div className={styles.count}>
-          <h1>{`白：` + `${countWhite}` + `個`}</h1>
-        </div>
-        <div className={styles.count}>
-          <h1>{`黒：` + `${countBrack}` + `個`}</h1>
-        </div>
+      </div>
+      <div className={styles.turn}>
+        <h1>
+          {`${turnColor === 1 ? '黒の番' : '白の番'}` +
+            `：` +
+            `${board.some((row) => row.includes(3)) ? '置けます' : 'パス'}` +
+            `　`}
+        </h1>
+      </div>
+      <div className={styles.count}>
+        <h1>{`白：` + `${countWhite}` + `個` + ` / ` + `黒：` + `${countBrack}` + `個`}</h1>
       </div>
     </div>
   );
