@@ -162,17 +162,13 @@ const Home = () => {
           ))
         )}
       </div>
-      <div className={styles.turn}>
-        <h1>
-          {`${turnColor === 1 ? '黒の' : '白の'}` +
-            `：` +
-            `${board.some((row) => row.includes(3)) ? '置けます' : 'パス'}` +
-            `  `}
-        </h1>
-      </div>
-      <div className={styles.count}>
-        <h1>{`白：` + `${countWhite}` + `個` + ` / ` + `黒：` + `${countBrack}` + `個`}</h1>
-      </div>
+      <h1>
+        {`${turnColor === 1 ? '黒の番' : '白の番'}` +
+          `：` +
+          `${board.some((row) => row.includes(3)) ? '置けます' : 'パス'}` +
+          `  `}
+      </h1>
+      <h1>{`白：` + `${countWhite}` + `個` + ` / ` + `黒：` + `${countBrack}` + `個`}</h1>
     </div>
   );
 };
