@@ -25,17 +25,16 @@ const Home = () => {
   ];
   const [turnColor, setTurnColor] = useState(1);
   const newBoard: number[][] = JSON.parse(JSON.stringify(board));
-  const count = [];
-  console.log('a');
+  const count: number[] = [];
+  //console.log('a');
   let isPlace = false;
-  let isPredict = true;
-  const turn = 1;
+  //let yisPredict = true;
   const clickMasu = (x: number, y: number) => {
     if (board.some((row) => row.includes(3))) {
       if (board[y][x] === 3) {
-        console.log(x, y);
+        //console.log(x, y);
         for (const n of direction) {
-          console.log(n);
+          //console.log(n);
           for (
             let distance = 1;
             distance <=
@@ -45,42 +44,42 @@ const Home = () => {
             );
             distance++
           ) {
-            console.log('!');
+            //console.log('!');
             if (board[y + n[1] * distance][x + n[0] * distance] % 3 === 0) {
-              console.log('a');
+              //console.log('a');
               distance = 0;
               break;
             } else if (board[y + n[1] * distance][x + n[0] * distance] === 3 - turnColor) {
-              console.log('b');
+              //console.log('b');
               continue;
             } else if (board[y + n[1] * distance][x + n[0] * distance] === turnColor) {
-              console.log('c');
-              console.log('d', distance);
+              //console.log('c');
+              //console.log('d', distance);
               for (let i = 1; i < distance; i++) {
                 newBoard[y + n[1] * (distance - i)][x + n[0] * (distance - i)] = turnColor;
                 isPlace = true;
               }
-              console.log(isPlace);
+              //console.log(isPlace);
               break;
             }
           }
         }
         if (isPlace) {
-          console.log('e');
+          //console.log('e');
           newBoard[y][x] = turnColor;
           for (let x1 = 0; x1 < 8; x1++) {
             for (let y1 = 0; y1 < 8; y1++) {
-              console.log(newBoard[y1][x1]);
+              //console.log(newBoard[y1][x1]);
               newBoard[y1][x1] %= 3;
             }
           }
-          //console.table(newBoard);
-          console.log('next');
+          ////console.table(newBoard);
+          //console.log('next');
           for (let x2 = 0; x2 < 8; x2++) {
             for (let y2 = 0; y2 < 8; y2++) {
-              console.log(x2, y2); //
+              //console.log(x2, y2); //
               for (const n of direction) {
-                console.log(n);
+                //console.log(n);
                 for (
                   let distance = 1;
                   distance <=
@@ -92,51 +91,55 @@ const Home = () => {
                 ) {
                   if (newBoard[y2][x2] === 3 - turnColor) {
                     if (newBoard[y2 + n[1] * distance][x2 + n[0] * distance] === turnColor) {
-                      console.log('b');
+                      //console.log('b');
                       continue;
                     } else if (newBoard[y2 + n[1] * distance][x2 + n[0] * distance] % 3 === 0) {
-                      console.log('c', distance);
+                      //console.log('c', distance);
                       for (let i = 1; i < distance; i++) {
-                        console.log('d', [x2 + n[0] * distance], [y2 + n[1] * distance]);
+                        //console.log('d', [x2 + n[0] * distance], [y2 + n[1] * distance]);
                         newBoard[y2 + n[1] * distance][x2 + n[0] * distance] = 3;
                       }
-                      isPredict = true;
-                      console.log(isPlace);
+                      //isPredict = true;
+                      //console.log(isPlace);
                       break;
                     } else {
-                      isPredict = false;
+                      //isPredict = false;
                       break;
                     }
                   }
                 }
               }
-              //console.table(newBoard);
+              ////console.table(newBoard);
               setBoard(newBoard);
             }
           }
         }
       }
     }
-  };
-  for (let k = 0; k < 2; k++) {
-    for (let i = 1; i < 8; i++) {
-      for (let j = 1; j < 8; j++) {
-        if (board[i][j] === 1 + k) {
-          count[k] = 1;
-        }
-      }
-    }
-    console.log(isPlace);
-    console.log(isPredict);
+
+    //console.log(isPlace);
+    //console.log(newBoard.some((row) => row.includes(3)));
     if (isPlace) {
       setTurnColor(3 - turnColor);
     } else {
-      if (board.some((row) => row.includes(3)) === false && turn > 9) {
+      if (board.some((row) => row.includes(3)) === false) {
         setTurnColor(3 - turnColor);
-      } else if (count[0] === count[1]) {
-        alert(`${count[0] > count[1] ? '黒' : '白'}の勝ち`);
+        if (count[0] !== count[1]) {
+          alert(`${count[0] > count[1] ? '黒' : '白'}の勝ち`);
+        }
       }
     }
+  };
+  for (let k = 0; k < 2; k++) {
+    let a = 0;
+    for (let i = 0; i < 8; i++) {
+      for (let j = 0; j < 8; j++) {
+        if (board[i][j] === 1 + k) {
+          a += 1;
+        }
+      }
+    }
+    count[k] = a;
   }
   return (
     <div className={styles.container}>
@@ -158,12 +161,13 @@ const Home = () => {
           ))
         )}
       </div>
-      <h1>
-        {`${turnColor === 1 ? '黒の番' : '白の番'}` +
-          `：` +
-          `${board.some((row) => row.includes(3)) ? '置けます' : 'パス'}` +
-          `  `}
-      </h1>
+      {(isPlace || board.some((row) => row.includes(3))) && (
+        <h1>
+          {`${turnColor === 1 ? '黒の番' : '白の番'}` +
+            `：` +
+            `${board.some((row) => row.includes(3)) ? '置けます' : 'パス'}`}
+        </h1>
+      )}
       <h1>{`白：` + `${count[0]}` + `個` + ` / ` + `黒：` + `${count[1]}` + `個`}</h1>
     </div>
   );
