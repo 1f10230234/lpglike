@@ -3,16 +3,20 @@ import styles from './index.module.css';
 
 const Home = () => {
   //prettier-ignore
-  const [board,setBoard] = useState([
-[0,0,0,0,0,0,0,0],
-[0,0,0,0,0,0,0,0],
-[0,0,0,3,0,0,0,0],
-[0,0,3,2,1,0,0,0],
-[0,0,0,1,2,3,0,0],
-[0,0,0,0,3,0,0,0],
-[0,0,0,0,0,0,0,0],
-[0,0,0,0,0,0,0,0]
-  ]);
+  const newGame = () => {
+    const [board, setBoard] = useState(normalBoard);
+    const [turnColor, setTurnColor] = useState(1);
+  };
+  const normalBoard = [
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 3, 0, 0, 0, 0],
+    [0, 0, 3, 2, 1, 0, 0, 0],
+    [0, 0, 0, 1, 2, 3, 0, 0],
+    [0, 0, 0, 0, 3, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+  ];
   const direction = [
     [0, 1],
     [1, 1],
@@ -23,7 +27,7 @@ const Home = () => {
     [-1, 0],
     [-1, 1],
   ];
-  const [turnColor, setTurnColor] = useState(1);
+  newGame();
   const newBoard: number[][] = JSON.parse(JSON.stringify(board));
   const count: number[] = [];
   //console.log('a');
@@ -110,7 +114,6 @@ const Home = () => {
                 }
               }
               ////console.table(newBoard);
-              setBoard(newBoard);
             }
           }
         }
@@ -126,9 +129,18 @@ const Home = () => {
         setTurnColor(3 - turnColor);
         if (count[0] !== count[1]) {
           alert(`${count[0] > count[1] ? '黒' : '白'}の勝ち`);
+          if (confirm('新しいゲームを作りますか？')) {
+            for (let i = 0; i < 8; i++) {
+              for (let j = 0; j < 8; j++) {
+                newBoard[i][j] = normalBoard[i][j];
+                setTurnColor(1);
+              }
+            }
+          }
         }
       }
     }
+    setBoard(newBoard);
   };
   for (let k = 0; k < 2; k++) {
     let a = 0;
@@ -169,6 +181,9 @@ const Home = () => {
         </h1>
       )}
       <h1>{`白：` + `${count[0]}` + `個` + ` / ` + `黒：` + `${count[1]}` + `個`}</h1>
+      <div className={styles.button} onClick={() => newGame()}>
+        <button>リセット</button>
+      </div>
     </div>
   );
 };
