@@ -35,7 +35,7 @@ const Home = () => {
   const [turnColor, setTurnColor] = useState(1);
   const newBoard: number[][] = JSON.parse(JSON.stringify(board));
   const count: number[] = [];
-  let isPlace: boolean;
+  let isPlace = false;
   const clickMasu = (x: number, y: number) => {
     isPlace = false;
     const isFrontColor = (color: number, n: number[], distance: number, x: number, y: number) => {
