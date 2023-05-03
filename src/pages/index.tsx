@@ -133,7 +133,7 @@ const Home = () => {
       }
     }
   };
-  for (let k = 0; k < 2; k++) {
+  for (let k = 0; k < 3; k++) {
     let a = 0;
     for (let i = 0; i < 8; i++) {
       for (let j = 0; j < 8; j++) {
@@ -143,6 +143,15 @@ const Home = () => {
       }
     }
     count[k] = a;
+  }
+  if (count[2] === 0) {
+    for (let i = 0; i < 8; i++) {
+      for (let j = 0; j < 8; j++) {
+        if (board[i][j] === 0) {
+          clickMasu(i, j);
+        }
+      }
+    }
   }
   return (
     <div className={styles.container}>
