@@ -135,7 +135,7 @@ const Home = () => {
       }
     }
   };
-  for (let k = 0; k < 3; k++) {
+  for (let k = 0; k < 2; k++) {
     let a = 0;
     for (let i = 0; i < 8; i++) {
       for (let j = 0; j < 8; j++) {
@@ -147,15 +147,6 @@ const Home = () => {
     count[k] = a;
   }
 
-  if (count[2] === 0) {
-    for (let i = 0; i < 8; i++) {
-      for (let j = 0; j < 8; j++) {
-        if (board[i][j] === 0) {
-          clickMasu(i, j);
-        }
-      }
-    }
-  }
   return (
     <div className={styles.container}>
       <div className={styles.board}>
@@ -176,7 +167,7 @@ const Home = () => {
           ))
         )}
       </div>
-      {board.some((row) => row.includes(3)) === false && isPlace === false && (
+      {
         <h1>
           {`${turnColor === 1 ? '黒' : '白'}` +
             `の番：置けま` +
@@ -186,7 +177,7 @@ const Home = () => {
                 : 'せん。画面をクリックしてパスしてください'
             }`}
         </h1>
-      )}
+      }
       <h1>{`白：` + `${count[0]}` + `個` + ` / ` + `黒：` + `${count[1]}` + `個`}</h1>
       <div
         className={styles.button}
