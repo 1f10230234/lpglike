@@ -146,17 +146,7 @@ const Home = () => {
     }
     count[k] = a;
   }
-<<<<<<< HEAD
-  // if (count[2] === 0) {
-  //   for (let i = 0; i < 8; i++) {
-  //     for (let j = 0; j < 8; j++) {
-  //       if (board[i][j] === 0) {
-  //         clickMasu(i, j);
-  //       }
-  //     }
-  //   }
-  // }
-=======
+
   if (count[2] === 0) {
     for (let i = 0; i < 8; i++) {
       for (let j = 0; j < 8; j++) {
@@ -166,7 +156,6 @@ const Home = () => {
       }
     }
   }
->>>>>>> ef24a04823e56ece77a9cb45128b8e3d1020ee9e
   return (
     <div className={styles.container}>
       <div className={styles.board}>
