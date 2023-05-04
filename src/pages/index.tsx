@@ -108,6 +108,10 @@ const Home = () => {
         }
       }
     }
+    if (newBoard.some((row) => row.includes(3))) {
+      setTurnColor(3 - turnColor);
+      setBoard(newBoard);
+    }
     console.log(isPlace);
     console.log(newBoard.some((row) => row.includes(3)));
     if (isPlace) {
@@ -118,8 +122,6 @@ const Home = () => {
         setTurnColor(3 - turnColor);
         setBoard(newBoard);
       } else {
-        setTurnColor(3 - turnColor);
-        setBoard(newBoard);
         if (count[0] !== count[1]) {
           alert(`${count[0] > count[1] ? '黒' : '白'}の勝ち`);
         }
@@ -133,7 +135,7 @@ const Home = () => {
       }
     }
   };
-  for (let k = 0; k < 2; k++) {
+  for (let k = 0; k < 3; k++) {
     let a = 0;
     for (let i = 0; i < 8; i++) {
       for (let j = 0; j < 8; j++) {
@@ -144,6 +146,15 @@ const Home = () => {
     }
     count[k] = a;
   }
+  // if (count[2] === 0) {
+  //   for (let i = 0; i < 8; i++) {
+  //     for (let j = 0; j < 8; j++) {
+  //       if (board[i][j] === 0) {
+  //         clickMasu(i, j);
+  //       }
+  //     }
+  //   }
+  // }
   return (
     <div className={styles.container}>
       <div className={styles.board}>
